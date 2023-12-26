@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ${{ var.ocqImage }}
     steps:
-      - uses: checkout@main
+      - uses: actions/checkout@main
       - name: Composer Validate --no-interaction -vvv
         run: composer validate
       - name: Composer Install
