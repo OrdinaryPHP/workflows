@@ -27,7 +27,7 @@ env:
 jobs:
   code-quality:
     runs-on: ubuntu-latest
-    container: ${{ vars.ocqImage }}
+    container: ghcr.io/ordinaryphp/code-quality:${{ inputs.ocqVersion }}-php${{ inputs.phpVersion }}
     steps:
       - name: Versions
         run: |
@@ -59,7 +59,7 @@ jobs:
   unit-tests:
     if: ${{ vars.unit_test }}
     runs-on: ubuntu-latest
-    container: ${{ vars.ocqImage }}
+    container: ghcr.io/ordinaryphp/code-quality:${{ inputs.ocqVersion }}-php${{ inputs.phpVersion }}
     steps:
       - uses: actions/checkout@main
       - name: Composer Install
