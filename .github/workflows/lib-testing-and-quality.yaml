@@ -3,29 +3,23 @@ on:
   workflow_call:
     inputs:
       ocqVersion:
-        required: true
         type: string
         description: "ordinary/code-quality image version number"
         default: "branch-dev"
       phpVersion:
-        required: true
         type: string
         description: "PHP version to use for testing"
         default: "8.3"
       lint:
-        required: true
         type: boolean
         default: true
       static_analysis:
-        required: true
         type: boolean
         default: true
       code_style:
-        required: true
         type: boolean
         default: true
       unit_test:
-        required: true
         type: boolean
         default: true
 env:
