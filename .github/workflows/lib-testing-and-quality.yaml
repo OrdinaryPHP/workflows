@@ -33,7 +33,7 @@ env:
 jobs:
   code-quality:
     runs-on: ubuntu-latest
-    container: ${{ var.ocqImage }}
+    container: ${{ vars.ocqImage }}
     steps:
       - uses: actions/checkout@main
       - name: Composer Validate --no-interaction -vvv
@@ -41,13 +41,13 @@ jobs:
       - name: Composer Install
         run: composer install --no-interaction --optimize-autoloader -v
       - name: Lint
-        if: '${{ !cancelled() && var.lint }}'
+        if: '${{ !cancelled() && vars.lint }}'
         run: phplint
       - name: Static Analysis
-        if: '${{ !cancelled() && var.static_analysis }}'
+        if: '${{ !cancelled() && vars.static_analysis }}'
         run: psalm
       - name: Copy bin files with php extension
-        if: '${{ !cancelled() && var.code_style }}'
+        if: '${{ !cancelled() && vars.code_style }}'
         run: |
           for f in /code-quality/bin/*; do
             if [ -f "$f" ]; then
@@ -55,12 +55,12 @@ jobs:
             fi
           done
       - name: Code Style
-        if: '${{ !cancelled() && var.code_style }}'
+        if: '${{ !cancelled() && vars.code_style }}'
         run: phpcs
   unit-tests:
-    if: ${{ var.unit_test && hashFiles('tests/') != '' }}
+    if: ${{ vars.unit_test && hashFiles('tests/') != '' }}
     runs-on: ubuntu-latest
-    container: ${{ var.ocqImage }}
+    container: ${{ vars.ocqImage }}
     steps:
       - name: Composer Install
         run: composer install --no-interaction --optimize-autoloader --no-dev
