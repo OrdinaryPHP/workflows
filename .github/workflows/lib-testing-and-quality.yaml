@@ -58,11 +58,14 @@ jobs:
         if: '${{ !cancelled() && vars.code_style }}'
         run: phpcs
   unit-tests:
-    if: ${{ vars.unit_test && hashFiles('tests/') != '' }}
+    if: ${{ vars.unit_test }}
     runs-on: ubuntu-latest
     container: ${{ vars.ocqImage }}
     steps:
+      - uses: actions/checkout@main
       - name: Composer Install
+        if: ${{ hashFiles('tests/') != '' }}
         run: composer install --no-interaction --optimize-autoloader --no-dev
       - name: Unit Tests
+        if: ${{ hashFiles('tests/') != '' }}
         run: phpunit
