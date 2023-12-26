@@ -29,6 +29,11 @@ jobs:
     runs-on: ubuntu-latest
     container: ${{ vars.ocqImage }}
     steps:
+      - name: Versions
+        run: |
+          echo "Image: ${{ vars.ocqImage }}"
+          php --version
+          composer --version
       - uses: actions/checkout@main
       - name: Composer Validate --no-interaction -vvv
         run: composer validate
