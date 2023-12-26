@@ -31,7 +31,7 @@ jobs:
     steps:
       - name: Versions
         run: |
-          echo "Image: ${{ vars.ocqImage }}"
+          echo "Image: $ocqImage"
           php --version
           composer --version
       - uses: actions/checkout@main
