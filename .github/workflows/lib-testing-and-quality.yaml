@@ -40,13 +40,13 @@ jobs:
       - name: Composer Install
         run: composer install --no-interaction --optimize-autoloader -v
       - name: Lint
-        if: '!cancelled() && vars.lint'
+        if: '${{ !cancelled() && inputs.lint }}'
         run: phplint
       - name: Static Analysis
-        if: '!cancelled() && vars.static_analysis'
+        if: '${{ !cancelled() && inputs.static_analysis }}'
         run: psalm
       - name: Copy bin files with php extension
-        if: '!cancelled() && vars.code_style'
+        if: '${{ !cancelled() && inputs.code_style }}'
         run: |
           for f in /code-quality/bin/*; do
             if [ -f "$f" ]; then
@@ -54,10 +54,10 @@ jobs:
             fi
           done
       - name: Code Style
-        if: '!cancelled() && vars.code_style'
+        if: '${{ !cancelled() && inputs.code_style }}'
         run: phpcs
   unit-tests:
-    if: ${{ vars.unit_test }}
+    if: ${{ inputs.unit_test }}
     runs-on: ubuntu-latest
     container: ghcr.io/ordinaryphp/code-quality:${{ inputs.ocqVersion }}-php${{ inputs.phpVersion }}
     steps:
