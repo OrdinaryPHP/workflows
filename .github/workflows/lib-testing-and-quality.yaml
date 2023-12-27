@@ -31,7 +31,7 @@ env:
 jobs:
   code-quality:
     runs-on: ubuntu-latest
-    container: ${{ inputs.ocqImage }}
+    container: ${{ vars.ocqImage }}
     steps:
       - name: Versions
         run: |
@@ -63,7 +63,7 @@ jobs:
   unit-tests:
     if: ${{ inputs.unit_test }}
     runs-on: ubuntu-latest
-    container: ${{ inputs.ocqImage }}
+    container: ${{ vars.ocqImage }}
     steps:
       - uses: actions/checkout@main
       - name: Composer Install
