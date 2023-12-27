@@ -22,16 +22,12 @@ on:
       unit_test:
         type: boolean
         default: true
-      ocqImage:
-        type: string
-        description: "Image to use for quality checks. (Overrides php_version and ocq_version)"
-        default: ghcr.io/ordinaryphp/code-quality:${{ github.event.inputs.ocqVersion }}-php${{ github.event.inputs.phpVersion }}
 env:
   ocqImage: ghcr.io/ordinaryphp/code-quality:${{ inputs.ocqVersion }}-php${{ inputs.phpVersion }}
 jobs:
   code-quality:
     runs-on: ubuntu-latest
-    container: ${{ vars.ocqImage }}
+    container: ghcr.io/ordinaryphp/code-quality:${{ inputs.ocqVersion }}-php${{ inputs.phpVersion }}
     steps:
       - name: Versions
         run: |
@@ -39,8 +35,8 @@ jobs:
           php --version
           composer --version
       - uses: actions/checkout@main
-      - name: Composer Validate --no-interaction -vvv
-        run: composer validate
+      - name: Composer Validate
+        run: composer validate --no-interaction -vvv
       - name: Composer Install
         run: composer install --no-interaction --optimize-autoloader -v
       - name: Lint
@@ -63,7 +59,7 @@ jobs:
   unit-tests:
     if: ${{ inputs.unit_test }}
     runs-on: ubuntu-latest
-    container: ${{ vars.ocqImage }}
+    container: ghcr.io/ordinaryphp/code-quality:${{ inputs.ocqVersion }}-php${{ inputs.phpVersion }}
     steps:
       - uses: actions/checkout@main
       - name: Composer Install
