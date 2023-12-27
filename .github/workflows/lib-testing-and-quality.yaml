@@ -22,12 +22,16 @@ on:
       unit_test:
         type: boolean
         default: true
+      ocqImage:
+        type: string
+        description: "Image to use for quality checks. (Overrides php_version and ocq_version)"
+        default: ghcr.io/ordinaryphp/code-quality:${{ inputs.ocqVersion }}-php${{ inputs.phpVersion }}
 env:
   ocqImage: ghcr.io/ordinaryphp/code-quality:${{ inputs.ocqVersion }}-php${{ inputs.phpVersion }}
 jobs:
   code-quality:
     runs-on: ubuntu-latest
-    container: ${{ env.ocqImage }}
+    container: ${{ inputs.ocqImage }}
     steps:
       - name: Versions
         run: |
@@ -59,7 +63,7 @@ jobs:
   unit-tests:
     if: ${{ inputs.unit_test }}
     runs-on: ubuntu-latest
-    container: ${{ env.ocqImage }}
+    container: ${{ inputs.ocqImage }}
     steps:
       - uses: actions/checkout@main
       - name: Composer Install
