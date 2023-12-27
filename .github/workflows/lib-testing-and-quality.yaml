@@ -25,7 +25,7 @@ on:
       ocqImage:
         type: string
         description: "Image to use for quality checks. (Overrides php_version and ocq_version)"
-        default: ghcr.io/ordinaryphp/code-quality:${{ inputs.ocqVersion }}-php${{ inputs.phpVersion }}
+        default: ghcr.io/ordinaryphp/code-quality:${{ github.event.inputs.ocqVersion }}-php${{ github.event.inputs.phpVersion }}
 env:
   ocqImage: ghcr.io/ordinaryphp/code-quality:${{ inputs.ocqVersion }}-php${{ inputs.phpVersion }}
 jobs:
